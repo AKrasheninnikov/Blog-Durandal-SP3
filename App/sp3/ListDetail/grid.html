@@ -1,0 +1,83 @@
+﻿<div>
+ <table class="table table-striped table-bordered table-hover">
+  <colgroup data-bind="foreach: columns">
+    <col data-bind="attr: { style: getColStyle() }" />
+  </colgroup>
+
+  <thead>
+    <tr data-bind="foreach: columns">
+      <th data-bind="click: $root.sortByHeader, css: { sortable: sortable }">
+        <span data-bind="text: title"></span>
+        <!-- ko if: sorted()-->
+        <!-- ko if: sortAsc()-->
+        <i class="icon-angle-up pull-right"></i>
+        <!-- /ko -->
+        <!-- ko if: !sortAsc()-->
+        <i class="icon-angle-down pull-right"></i>
+        <!-- /ko -->
+        <!-- /ko -->
+      </th>
+    </tr>
+  </thead>
+
+  <tbody data-bind="foreach: listItems">
+    <tr data-bind="foreach: $parent.columns, css: { odd: $index() % 2 === 0 }">
+
+      <!-- ko ifnot: $data.template -->
+      <td data-bind="text: $parent[$data.field]"></td>
+      <!-- /ko -->
+
+      <!-- ko if: $data.template -->
+      <td data-bind="text: $data.template($parent[$data.field])"></td>
+      <!-- /ko -->
+
+    </tr>
+  </tbody>
+
+  <tbody data-bind="if: paging().isEmpty">
+    <tr>
+      <td data-bind="attr: { colspan: columns.length }">The query returned no results</td>
+    </tr>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td data-bind="attr: { colspan: columns.length }">
+        <table class="footer">
+          <tbody>
+            <tr>
+              <td class="pageSize">
+                <div class="pull-left">
+                  <span class="loader" data-bind="css: { active: isFetching }">
+                    <i class="icon-spinner icon-2x icon-spin"></i>
+                  </span>
+                </div>
+
+                <select class="span1" data-bind="value: _pageSize, options: [3, 5, 7, 10, 13, 17, 20, 50]"></select>
+                <!--<input class="span1" data-bind="value: _pageSize"></input>-->
+                <span class="help-inline">items</span>
+
+              </td>
+              <td class="pager">
+                <a href="#" data-bind="css: { disabled: !hasPrevious() }, click: previous"><i class="icon-angle-left"></i>previous</a>
+                <a href="#" data-bind="css: { disabled: !hasNext() }, click: next">next <i class="icon-angle-right"></i></a>
+              </td>
+              <td class="pageInfo">
+                <span class="" data-bind="text: paging().from"></span>- <span class="" data-bind="  text: paging().to"></span>
+                <div class="pull-right">
+                  <a href="#" title="Settings. Not implemented!" onclick="return false;">
+                    <i class="icon-cog"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tfoot>
+
+
+</table>
+
+</div>

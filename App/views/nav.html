@@ -1,0 +1,18 @@
+﻿<div class="navbar navbar">
+  <div class="navbar-inner">
+    <a class="brand" data-bind="attr: { href: router.visibleRoutes()[0].hash }">
+      <i class="icon-home"></i>
+      <span>Durandal SP3</span>
+    </a>
+    <ul class="nav" data-bind="foreach: router.visibleRoutes">
+      <li data-bind="css: { active: isActive }">
+        <a data-bind="attr: { href: hash },
+                      html: caption"></a>
+      </li>
+    </ul>
+    <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
+      <i class="icon-spinner icon-2x icon-spin"></i>
+    </div>
+  </div>
+</div>
+
